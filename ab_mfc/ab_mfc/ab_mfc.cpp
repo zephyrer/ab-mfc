@@ -7,6 +7,10 @@
 
 #include "ab_mfcDoc.h"
 #include "ab_mfcView.h"
+#include "afxcmn.h"
+
+#include "Page1.h"
+#include "Page2.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -114,7 +118,7 @@ class CAboutDlg : public CDialog
 {
 public:
 	CAboutDlg();
-
+	virtual BOOL OnInitDialog();
 // 对话框数据
 	enum { IDD = IDD_ABOUTBOX };
 
@@ -124,6 +128,13 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	CTabCtrl m_tab;
+	int m_CurSelTab; 
+	CPage1 m_page1; 
+	CPage2 m_page2; 
+	CDialog* pDialog[2];
+	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
@@ -133,9 +144,11 @@ CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TAB1, m_tab);//用于设置此变量与IDC_TAB1控件进行交互
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
+	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CAboutDlg::OnTcnSelchangeTab1)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
@@ -148,3 +161,38 @@ void Cab_mfcApp::OnAppAbout()
 
 // Cab_mfcApp 消息处理程序
 
+BOOL CAboutDlg::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	m_tab.InsertItem(0, _T("tab1")); 
+	m_tab.InsertItem(1, _T("tab2")); 
+	m_page1.Create(IDD_TAB_DLG1, &m_tab); 
+	m_page2.Create(IDD_TAB_DLG2, &m_tab); 
+	//设置画面窗口大小在控件内
+	CRect rc; m_tab.GetClientRect(rc); 
+	rc.top += 20; 
+	rc.bottom -= 0; 
+	rc.left += 0; 
+	rc.right -= 0; 
+	m_page1.MoveWindow(&rc); 
+	m_page2.MoveWindow(&rc); 
+
+	pDialog[0] = &m_page1; 
+	pDialog[1] = &m_page2; 
+	//显示初始画面
+	pDialog[0]->ShowWindow(SW_SHOW); 
+	pDialog[1]->ShowWindow(SW_HIDE);
+	//保存当前点 选项
+	m_CurSelTab = 0; 
+	return true;
+}
+void CAboutDlg::OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	//把当前的页面隐藏起来 
+	pDialog[m_CurSelTab]->ShowWindow(SW_HIDE); 
+	//得到新的页面索引 
+	m_CurSelTab = m_tab.GetCurSel(); 
+	//把新的页面显示出来 
+	pDialog[m_CurSelTab]->ShowWindow(SW_SHOW); 
+	*pResult = 0;
+}

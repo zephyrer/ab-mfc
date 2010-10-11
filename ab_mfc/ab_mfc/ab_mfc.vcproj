@@ -206,6 +206,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Page1.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Page2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplashWnd.cpp"
 				>
 			</File>
@@ -252,6 +260,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Page1.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Page2.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Resource.h"
 				>
 			</File>
@@ -286,11 +302,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\res\icon.ico"
+				>
+			</File>
+			<File
 				RelativePath=".\res\Toolbar.bmp"
 				>
 			</File>
 			<File
 				RelativePath=".\res\撒的飞洒地方.bmp"
+				>
+			</File>
+			<File
+				RelativePath=".\res\电线杆纸.bmp"
 				>
 			</File>
 		</Filter>
