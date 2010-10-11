@@ -55,9 +55,8 @@
 #define SPLASH_WIDTH 200
 
 #include "SplashWnd.h"
-
-
-
+#include <cstdlib>
+#define MYWM_NOTIFYICON WM_USER+1  //Õ–≈ÃÕº±ÍΩ·ππ
 
 #ifdef _UNICODE
 #if defined _M_IX86
