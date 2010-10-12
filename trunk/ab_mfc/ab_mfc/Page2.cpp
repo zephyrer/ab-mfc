@@ -1,0 +1,165 @@
+// Page1.cpp : 实现文件
+//
+
+#include "stdafx.h"
+#include "ab_mfc.h"
+#include "Page2.h"
+
+
+// CPage1 对话框
+
+IMPLEMENT_DYNAMIC(CPage2, CDialog)
+
+CPage2::CPage2(CWnd* pParent /*=NULL*/)
+	: CDialog(CPage2::IDD, pParent)
+{
+
+}
+
+CPage2::~CPage2()
+{
+	
+}
+
+void CPage2::DoDataExchange(CDataExchange* pDX)
+{
+	CDialog::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_TREE_FILE, m_FileTree);
+}
+
+
+BEGIN_MESSAGE_MAP(CPage2, CDialog)
+	ON_BN_CLICKED(IDC_BUTTON_FILESEARCH, &CPage2::OnBnClickedButtonFilesearch)
+	ON_WM_PAINT()
+END_MESSAGE_MAP()
+
+
+// CPage1 消息处理程序
+
+void CPage2::OnBnClickedButtonFilesearch()
+{
+	m_iImageList.Create(24, 24, TRUE,1, 0);
+	HICON hIcon = NULL;
+	hIcon = (HICON)::LoadImage(::AfxGetInstanceHandle(), 
+		MAKEINTRESOURCE(IDI_ICON_UBUNTU), IMAGE_ICON, 24, 24, 0);
+	m_iImageList.Add(hIcon);
+	m_FileTree.SetImageList ( &m_iImageList,TVSIL_NORMAL );
+	BrowseFile(0,"成绩表");//遍历"成绩表"文件夹内的所有目录
+}
+
+BOOL CPage2::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+	
+	SetIcon(m_hIcon, TRUE);			// Set big icon
+	SetIcon(m_hIcon, FALSE);		// Set small icon
+
+	m_iImageList.Create(24, 24, TRUE,1, 0);
+	HICON hIcon = NULL;
+	hIcon = (HICON)::LoadImage(::AfxGetInstanceHandle(), 
+	MAKEINTRESOURCE(IDI_ICON_UBUNTU), IMAGE_ICON, 24, 24, 0);
+	m_iImageList.Add(hIcon);
+	m_FileTree.SetImageList ( &m_iImageList,TVSIL_NORMAL );
+	BrowseFile(0,"成绩表");//遍历"成绩表"文件夹内的所有目录
+
+	return TRUE;
+}
+
+void CPage2::BrowseFile(int CallNum, CString strFile)
+{
+	CallNum++;
+	CFileFind ff;
+	CString szDir = strFile;
+
+	if(szDir.Right(1) != "\\")
+		szDir += "\\";
+
+	szDir += "*.*";
+
+	BOOL res = ff.FindFile(szDir);
+	while(res)
+	{
+		res = ff.FindNextFile();
+		if(ff.IsDirectory() && !ff.IsDots())
+		{
+			//如果是一个子目录，用递归继续往深一层找
+			CString strPath = ff.GetFilePath();
+			CString strTitle = ff.GetFileTitle();
+			int i =0;
+			switch(CallNum)
+			{
+			case 1:
+				strHTFir = m_FileTree.InsertItem(strTitle,0,0,NULL);						
+				break;
+			case 2:
+				strHTSec = m_FileTree.InsertItem(strTitle,0,0,strHTFir);											
+				break;
+			case 3:
+				strHtThi = m_FileTree.InsertItem(strTitle,0,0,strHTSec);					
+				break;
+			case 4:
+				strHtFor = m_FileTree.InsertItem(strTitle,0,0,strHtThi);					
+				break;
+			default:
+				strHtFif = m_FileTree.InsertItem(strTitle,0,0,strHtFor);
+				break;					
+			}
+			BrowseFile(CallNum,strPath);
+		}
+		else if(!ff.IsDirectory() && !ff.IsDots())
+		{
+			//显示当前访问的文件
+			CString strPath;
+			CString strTitle;
+			strPath = ff.GetFilePath();
+			strTitle = ff.GetFileTitle();
+			switch(CallNum)
+			{
+			case 1:
+				strRoot = m_FileTree.InsertItem(strTitle,0,0,NULL);
+				break;
+			case 2:
+				strHtEnd = m_FileTree.InsertItem(strTitle,0,0,strHTFir);
+				break;
+			case 3:
+				strHtEnd = m_FileTree.InsertItem(strTitle,0,0,strHTSec);				
+				break;
+			case 4:
+				strHtEnd = m_FileTree.InsertItem(strTitle,0,0,strHtThi);
+				break;
+			case 5:
+				strHtEnd = m_FileTree.InsertItem(strTitle,0,0,strHtFor);
+				break;
+			default:
+				strHtEnd = m_FileTree.InsertItem(strTitle,0,0,strHtFif);
+				break;
+			}
+		}
+	}
+	ff.Close();//关闭
+}
+void CPage2::OnPaint()
+{
+	CPaintDC dc(this); // device context for painting
+	if (IsIconic())
+	{
+		CPaintDC dc(this); // device context for painting
+
+		SendMessage(WM_ICONERASEBKGND, (WPARAM) dc.GetSafeHdc(), 0);
+
+		// Center icon in client rectangle
+		int cxIcon = GetSystemMetrics(SM_CXICON);
+		int cyIcon = GetSystemMetrics(SM_CYICON);
+		CRect rect;
+		GetClientRect(&rect);
+		int x = (rect.Width() - cxIcon + 1) / 2;
+		int y = (rect.Height() - cyIcon + 1) / 2;
+
+		// Draw the icon
+		dc.DrawIcon(x, y, m_hIcon);
+	}
+	else
+	{
+		CDialog::OnPaint();
+	}
+}
