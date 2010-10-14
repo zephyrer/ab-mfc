@@ -54,6 +54,9 @@ BEGIN_MESSAGE_MAP(CPage1, CDialog)
 	ON_NOTIFY(UDN_DELTAPOS, IDC_SPIN1, &CPage1::OnDeltaposSpin1)
 	ON_BN_CLICKED(IDC_BUTTON_GETTIME, &CPage1::OnBnClickedButtonGettime)
 	ON_BN_CLICKED(IDC_BUTTON_GETIP, &CPage1::OnBnClickedButtonGetip)
+	ON_WM_HSCROLL()
+//	ON_NOTIFY(NM_THEMECHANGED, IDC_SCROLLBAR1, &CPage1::OnThemechangedScrollbar1)
+ON_WM_VSCROLL()
 END_MESSAGE_MAP()
 
 
@@ -103,9 +106,11 @@ BOOL CPage1::OnInitDialog()
 	//slider + progress
 	m_slider.SetRange(0,100);
 	m_progress.SetRange(0,100);
-	char szNum[32];
-	itoa(m_slider.GetPos(),szNum,10);
-	SetDlgItemText(IDC_NUM,szNum);
+
+	CString strNum;
+	strNum.Format("%d", m_slider.GetPos());
+	SetDlgItemText(IDC_NUM, strNum);
+
 	//spin
 	m_spin.SetBuddy(GetDlgItem(IDC_NUM));
 	m_spin.SetRange(0,5);
@@ -118,7 +123,7 @@ void CPage1::OnBnClickedButtonCombAdd()
 	UpdateData(TRUE);
 	if(m_comb_add == "")
 	{
-		MessageBox("没有内容！","oops!",MB_OK);
+		MessageBox("没有内容！", "oops!", MB_OK);
 		return;
 	}
 	m_comb.AddString(m_comb_add);
@@ -131,7 +136,7 @@ void CPage1::OnBnClickedButtonCombDel()
 {
 	if(m_comb.GetCount() == 0)
 	{
-		MessageBox("没东西了！","oops!",MB_OK);
+		MessageBox("没东西了！", "oops!", MB_OK);
 	}
 	UpdateData(TRUE);
 	int curSel = m_comb.GetCurSel();
@@ -167,7 +172,7 @@ void CPage1::OnBnClickedButton4()
 	}
 	else
 	{
-		MessageBox("没有要删除的项目！","oops!",MB_OK);
+		MessageBox("没有要删除的项目！", "oops!", MB_OK);
 	}
 }
 
@@ -176,12 +181,12 @@ void CPage1::OnBnClickedIdcButtonListCtrlAdd()
 	UpdateData(TRUE);
 	if (m_list_ctrl_add == "")
 	{
-		MessageBox("没有内容！","oops!",MB_OK);
+		MessageBox("没有内容！", "oops!", MB_OK);
 		return;
 	}
     int nRow = m_list_ctrl.GetItemCount();//从后往前插入
-	nRow = m_list_ctrl.InsertItem(nRow,m_list_ctrl_add);//插入行
-	m_list_ctrl.SetItemText(nRow,1,m_list_ctrl_add);//设置数据
+	nRow = m_list_ctrl.InsertItem(nRow, m_list_ctrl_add);//插入行
+	m_list_ctrl.SetItemText(nRow,1, m_list_ctrl_add);//设置数据
 	UpdateData(FALSE);
 }
 
@@ -205,8 +210,8 @@ void CPage1::OnNMRclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CPage1::OnBnClickedIdcButtonListCtrlDel()
 {
-	int nChoice=m_list_ctrl.GetNextItem(-1,LVNI_SELECTED);//获得选择项. 
-	if(nChoice!=-1)//当存在选择项时
+	int nChoice = m_list_ctrl.GetNextItem(-1, LVNI_SELECTED);//获得选择项. 
+	if (nChoice != -1)//当存在选择项时
 	{
 		m_list_ctrl.DeleteItem(nChoice);//删除项.
 	}
@@ -231,9 +236,10 @@ void CPage1::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMCUSTOMDRAW pNMCD = reinterpret_cast<LPNMCUSTOMDRAW>(pNMHDR);
 	int curPos = m_slider.GetPos();
 	m_progress.SetPos(curPos);
-	char szNum[32];
-	itoa(curPos,szNum,10);
-	SetDlgItemText(IDC_NUM,szNum);
+
+	CString strNum;
+	strNum.Format("%d", curPos);
+	SetDlgItemText(IDC_NUM, strNum);
 	*pResult = 0;
 }
 
@@ -249,20 +255,198 @@ void CPage1::OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult)//不好用
 	*pResult = 0;
 }
 
-void CPage1::OnBnClickedButtonGettime()//不好用
+void CPage1::OnBnClickedButtonGettime()// 已修改
 {
-// 	LPSYSTEMTIME st;
-// 	m_datetime.GetTime(st);
-// 	char szTime[128];
-// 	sprintf(szTime,"%d年%d月%d日",st->wYear,st->wMonth,st->wDay);
-// 	MessageBox(szTime,"日期",MB_OK);
+	SYSTEMTIME st;
+ 	m_datetime.GetTime(&st);
+ 	CString strTime;
+
+	CString strGmt = CTime::GetCurrentTime().FormatGmt("当前日期：%Y/%m/%d\n 当前时间：%H:%M:%S\n");   // 得到当前时间
+	strTime.Format("从控件上得到的时间：%d年%d月%d日", st.wYear, st.wMonth, st.wDay);
+ 	MessageBox(strGmt + strTime, "日期", MB_OK);
 }
 
 void CPage1::OnBnClickedButtonGetip()
 {
-	BYTE b1,b2,b3,b4;
-	m_ipaddress.GetAddress(b1,b2,b3,b4);
-	char szIp[128];
-	sprintf(szIp,"%d.%d.%d.%d",b1,b2,b3,b4);
-	MessageBox(szIp,"IP:",MB_OK);
+	int b1,b2,b3,b4;								// IP的四段,想一想为什么是int型而不是BYTE型呢？
+	CString strIP;
+	WSADATA wsd;
+	PHOSTENT  hostinfo;
+
+	if (WSAStartup(0x202,&wsd) !=  0) 
+	{ 
+		AfxMessageBox( "网络初始化失败 "); 
+	} 
+	else 
+	{
+		if (gethostname(strIP.GetBuffer(128), 128) == 0) 
+		{ 
+			//获取主机相关信息
+			MessageBox(strIP, "第一步，得到您的机器名：", MB_OK);
+			if ((hostinfo = gethostbyname(strIP))  !=  NULL) 
+			{ 
+				strIP = inet_ntoa(*(struct in_addr*)*hostinfo->h_addr_list);// 得到IP字符串 
+			} 
+			MessageBox(strIP, "第二步，得到您的IP：", MB_OK);
+		}
+	}
+	WSACleanup(); 
+
+	MessageBox("确定完成", "第三步，将您的IP字符串转成IP格式：", MB_OK);
+	sscanf(strIP, "%d.%d.%d.%d", &b1, &b2, &b3, &b4); // 将字符串转成IP
+	m_ipaddress.SetAddress(b1, b2, b3, b4);
+}
+
+
+void CPage1::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	// TODO: Add your message handler code here and/or call default
+	int minpos;
+	int maxpos;
+
+	if (pScrollBar != GetDlgItem(IDC_SCROLLBAR1))	  // 判断是不是本控件，如果不是，则直接返回
+		return ;									  // $$$$这是必要的, 为防止其它控件产生WM_HSCROLL消息干扰
+
+	pScrollBar->SetScrollRange(0, 100);				  // 设置滚动条范围
+	pScrollBar->GetScrollRange(&minpos, &maxpos); 
+	maxpos = pScrollBar->GetScrollLimit();			  // 得到实际滚动条范围
+
+	// 得到滚动条的当前位置
+	int curpos = pScrollBar->GetScrollPos();		  // 得到当前滑块所在位置
+	CWnd *HwndHstr = GetDlgItem(IDC_Hstr);			  // 得到显示横坐标标签的句柄
+
+	RECT rect;										  
+	pScrollBar->GetWindowRect(&rect);				  // 得到本控件的区域范围
+	int per = (rect.right - rect.left) / maxpos;	  // 得到它滚动一格的距离 $$：必要的
+	HwndHstr->GetWindowRect(&rect); 				  // 得到显示横坐标标签的区域
+	ScreenToClient(&rect);							  // 计算相对坐标
+
+	// 根据消息对滑块的位置以及标签的位置进行计算
+	switch (nSBCode)
+	{
+		case SB_LEFT:		
+			curpos = minpos;						  // 到最左处
+		break;
+
+		case SB_RIGHT:      						  // 到最右处
+			curpos = maxpos;
+		break;
+													  // 释放滑块
+		case SB_ENDSCROLL:		
+		break;
+
+		case SB_LINELEFT:							  // 点击左区域或左翻页时滑块及标签移动
+		case SB_PAGELEFT:
+			if (curpos > minpos)
+			{
+				curpos--;
+				rect.left -= per;
+				rect.right -= per;
+			}
+		break;
+
+		case SB_LINERIGHT:   						 // 点击右区域或右翻页时滑块及标签移动
+		case SB_PAGERIGHT:
+			if (curpos < maxpos - 1)				 // 想一想为什么要减1？
+			{
+				curpos++;
+				rect.left += per;
+				rect.right += per;
+			}
+		break;
+
+		case SB_THUMBPOSITION: 						//点击滑块进行拖曳时滑块及标签同时移动
+		case SB_THUMBTRACK:   
+			rect.left += (nPos - curpos) * per;
+			rect.right += (nPos - curpos) * per;
+			curpos = nPos;     
+		break;
+	}
+
+	// 将滑块及标签移动新的位置
+	pScrollBar->SetScrollPos(curpos); 
+	HwndHstr->MoveWindow(&rect);
+	
+	CString strNum;
+	strNum.Format("%d", curpos);
+	SetDlgItemText(IDC_Hstr, strNum);					 // 发给显示标签当前位置数值
+
+	CDialog::OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+
+void CPage1::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	// TODO: Add your message handler code here and/or call default
+	int minpos;
+	int maxpos;
+
+	if (pScrollBar != GetDlgItem(IDC_SCROLLBAR2))		 // 判断是不是本控件，如果不是，则直接返回
+		return ;
+
+	pScrollBar->SetScrollRange(0, 100);					 // 设置滚动条范围
+	pScrollBar->GetScrollRange(&minpos, &maxpos); 
+	maxpos = pScrollBar->GetScrollLimit();				 // 得到实际滚动条范围
+
+	// Get the current position of scroll box.
+	int curpos = pScrollBar->GetScrollPos();			 // 得到当前滑块所在位置
+	CWnd *HwndHstr = GetDlgItem(IDC_Vstr);				 // 得到显示横坐标标签的句柄
+
+	RECT rect;
+	pScrollBar->GetWindowRect(&rect);					 // 得到滚动条区域
+	int per = (rect.bottom - rect.top) / maxpos;		 // 得到它滚动一格的距离 
+	HwndHstr->GetWindowRect(&rect); 					 // 得到显示横坐标标签的区域
+	ScreenToClient(&rect);								 // 计算相对坐标
+
+	// 根据消息对滑块及标签位置进行定位
+	switch (nSBCode)
+	{
+		case SB_TOP:      								 // 到最顶处
+			curpos = minpos;
+		break;
+														 // 到最底处
+		case SB_BOTTOM:      
+			curpos = maxpos;
+		break;
+														// 释放滑块
+		case SB_ENDSCROLL:   
+		break;
+														// 点击上区域或者向上翻页按钮滑块及标签坐标变化
+		case SB_LINEUP:      
+		case SB_PAGEUP:
+			if (curpos > minpos)
+			{
+				curpos--;
+				rect.top -= per;
+				rect.bottom -= per;
+			}
+		break;
+
+		case SB_LINEDOWN:   							// 点击下区域或者向下翻页按钮滑块及标签坐标变化
+		case SB_PAGEDOWN:
+			if (curpos < maxpos - 1)
+			{
+				curpos++;
+				rect.top += per;
+				rect.bottom += per;
+			}
+		break;
+
+		case SB_THUMBPOSITION: 							//点击滑块进行拖曳时滑块及标签同时移动
+		case SB_THUMBTRACK:   
+			rect.top += (nPos - curpos) * per;
+			rect.bottom += (nPos - curpos) * per;
+			curpos = nPos;     
+		break;
+	}
+
+	// 将滑块及标签移动最新位置
+	pScrollBar->SetScrollPos(curpos); 
+	HwndHstr->MoveWindow(&rect);
+	
+	CString strNum;
+	strNum.Format("%d", curpos);
+	SetDlgItemText(IDC_Vstr, strNum);				   // 显示当前纵坐标
+
+	CDialog::OnVScroll(nSBCode, nPos, pScrollBar);
 }

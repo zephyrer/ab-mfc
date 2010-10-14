@@ -31,6 +31,7 @@ void CPage2::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPage2, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_FILESEARCH, &CPage2::OnBnClickedButtonFilesearch)
 	ON_WM_PAINT()
+	ON_WM_DROPFILES()
 END_MESSAGE_MAP()
 
 
@@ -38,13 +39,7 @@ END_MESSAGE_MAP()
 
 void CPage2::OnBnClickedButtonFilesearch()
 {
-	m_iImageList.Create(24, 24, TRUE,1, 0);
-	HICON hIcon = NULL;
-	hIcon = (HICON)::LoadImage(::AfxGetInstanceHandle(), 
-		MAKEINTRESOURCE(IDI_ICON_UBUNTU), IMAGE_ICON, 24, 24, 0);
-	m_iImageList.Add(hIcon);
-	m_FileTree.SetImageList ( &m_iImageList,TVSIL_NORMAL );
-	BrowseFile(0,"成绩表");//遍历"成绩表"文件夹内的所有目录
+	BrowseFile(0, "成绩表");//遍历"成绩表"文件夹内的所有目录
 }
 
 BOOL CPage2::OnInitDialog()
@@ -53,14 +48,21 @@ BOOL CPage2::OnInitDialog()
 	
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
+	m_iImageList.Create(24, 24, TRUE, 1, 0);
+	m_FileTree.ModifyStyle(0, TVS_HASBUTTONS | TVS_LINESATROOT |  TVS_HASLINES | TVS_INFOTIP);  // 带加号、虚线
 
-	m_iImageList.Create(24, 24, TRUE,1, 0);
 	HICON hIcon = NULL;
 	hIcon = (HICON)::LoadImage(::AfxGetInstanceHandle(), 
 	MAKEINTRESOURCE(IDI_ICON_UBUNTU), IMAGE_ICON, 24, 24, 0);
 	m_iImageList.Add(hIcon);
 	m_FileTree.SetImageList ( &m_iImageList,TVSIL_NORMAL );
-	BrowseFile(0,"成绩表");//遍历"成绩表"文件夹内的所有目录
+
+	//HINSTANCE hApp = ::GetModuleHandle(NULL);  // 得到应用程序的模块句柄 
+	//HBITMAP hbmp = ::LoadBitmap(hApp, MAKEINTRESOURCE(IDB_SPLASH));  // 加载程序中的位图资源 
+
+	//HRGN hrgn = ::BitmapToRegion(GetDlgItem(IDC_PIC)->m_hWnd, hbmp, -2, -1, -1);
+	//if (hrgn)
+		//SetWindowRgn(hrgn, TRUE);
 
 	return TRUE;
 }
@@ -69,7 +71,7 @@ void CPage2::BrowseFile(int CallNum, CString strFile)
 {
 	CallNum++;
 	CFileFind ff;
-	CString szDir = strFile;
+	CString szDir = strFile; 
 
 	if(szDir.Right(1) != "\\")
 		szDir += "\\";
@@ -81,14 +83,14 @@ void CPage2::BrowseFile(int CallNum, CString strFile)
 	{
 		res = ff.FindNextFile();
 		if(ff.IsDirectory() && !ff.IsDots())
-		{
+		{	 
 			//如果是一个子目录，用递归继续往深一层找
 			CString strPath = ff.GetFilePath();
 			CString strTitle = ff.GetFileTitle();
 			int i =0;
 			switch(CallNum)
 			{
-			case 1:
+			case 1:	  
 				strHTFir = m_FileTree.InsertItem(strTitle,0,0,NULL);						
 				break;
 			case 2:
@@ -162,4 +164,24 @@ void CPage2::OnPaint()
 	{
 		CDialog::OnPaint();
 	}
+}
+
+
+void CPage2::OnDropFiles(HDROP hDropInfo)
+{
+	// TODO: Add your message handler code here and/or call default
+	TCHAR strFile[MAX_PATH] ;
+	UINT cFiles = ::DragQueryFile(hDropInfo, 0xffffffff, 0, 0);     // 取得文件数
+
+	for (UINT count = 0; count < cFiles; count++)
+	{
+		if (cFiles > 0)
+        {		
+            ::DragQueryFile(hDropInfo, count, strFile, MAX_PATH);	// 得到拖放的文件名
+			AfxMessageBox(strFile);									// 提示拖放的文件名
+			BrowseFile(0, strFile);									// 浏览文件目录
+        }
+	}
+	
+	CDialog::OnDropFiles(hDropInfo);
 }
