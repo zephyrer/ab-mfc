@@ -4,7 +4,7 @@
 #include "afxdtctl.h"
 
 
-// CPage2 对话框
+// CPage1 对话框
 
 class CPage1 : public CDialog
 {
