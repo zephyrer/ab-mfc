@@ -46,4 +46,7 @@ public:
 	afx_msg void OnBnClickedButtonGettime();
 	CIPAddressCtrl m_ipaddress;
 	afx_msg void OnBnClickedButtonGetip();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+//	afx_msg void OnThemechangedScrollbar1(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 };
