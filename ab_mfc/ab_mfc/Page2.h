@@ -2,7 +2,7 @@
 #include "afxcmn.h"
 
 
-// CPage1 对话框
+// CPage2 对话框
 
 class CPage2 : public CDialog
 {

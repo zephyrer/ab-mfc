@@ -1,4 +1,4 @@
-// Page2.cpp : 实现文件
+// Page1.cpp : 实现文件
 //
 
 #include "stdafx.h"
@@ -6,7 +6,7 @@
 #include "Page1.h"
 
 
-// CPage2 对话框
+// CPage1 对话框
 
 IMPLEMENT_DYNAMIC(CPage1, CDialog)
 
