@@ -13,11 +13,13 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Chinese (Simplified, PRC) resources
+// 中文(中华人民共和国) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
+#ifdef _WIN32
 LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
 #pragma code_page(936)
+#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -80,7 +82,7 @@ IDB_SPLASH              BITMAP                  "res\\电线杆纸.bmp"
 // Toolbar
 //
 
-IDR_MAINFRAME TOOLBAR 16, 15
+IDR_MAINFRAME TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -100,7 +102,7 @@ END
 // Menu
 //
 
-IDR_MAINFRAME MENU
+IDR_MAINFRAME MENU 
 BEGIN
     POPUP "文件(&F)"
     BEGIN
@@ -133,10 +135,11 @@ BEGIN
     POPUP "帮助(&H)"
     BEGIN
         MENUITEM "控件模板",                        ID_APP_ABOUT
+        MENUITEM "调试控制台",                       ID_CONSOLE
     END
 END
 
-IDR_MENU_LIST MENU
+IDR_MENU_LIST MENU 
 BEGIN
     POPUP "listctrl"
     BEGIN
@@ -145,7 +148,7 @@ BEGIN
     END
 END
 
-IDR_MENU_ICON MENU
+IDR_MENU_ICON MENU 
 BEGIN
     POPUP "icon"
     BEGIN
@@ -161,7 +164,7 @@ END
 // Accelerator
 //
 
-IDR_MAINFRAME ACCELERATORS
+IDR_MAINFRAME ACCELERATORS 
 BEGIN
     "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
     "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
@@ -211,7 +214,7 @@ BEGIN
     PUSHBUTTON      "添加",IDC_IDC_BUTTON_LIST_CTRL_ADD,196,126,34,14
     PUSHBUTTON      "删除",IDC_IDC_BUTTON_LIST_CTRL_DEL,238,126,34,14
     CONTROL         "",IDC_SLIDER1,"msctls_trackbar32",TBS_BOTH | TBS_NOTICKS | WS_TABSTOP,9,150,165,15
-    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",PBS_SMOOTH | WS_BORDER,14,174,156,14
+    CONTROL         "",IDC_PROGRESS1,"msctls_progress32",WS_BORDER | 0x1,14,174,156,14
     SCROLLBAR       IDC_SCROLLBAR1,196,145,164,11
     SCROLLBAR       IDC_SCROLLBAR2,374,146,10,98,SBS_VERT
     CONTROL         "",IDC_SPIN1,"msctls_updown32",UDS_ARROWKEYS | UDS_HORZ,149,203,18,8
@@ -232,7 +235,6 @@ BEGIN
     CONTROL         "",IDC_TREE_FILE,"SysTreeView32",WS_BORDER | WS_HSCROLL | WS_TABSTOP,14,15,262,209
     PUSHBUTTON      "遍历文件夹",IDC_BUTTON_FILESEARCH,323,39,50,14
     LTEXT           "遍历文件夹生成目录树：",IDC_STATIC,289,21,94,8
-    CONTROL         "欢迎加入本GNU项目~~",IDC_MFCLINK1,"MfcLink",WS_TABSTOP,293,179,90,14
 END
 
 
@@ -281,7 +283,7 @@ END
 //
 
 #ifdef APSTUDIO_INVOKED
-GUIDELINES DESIGNINFO
+GUIDELINES DESIGNINFO 
 BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
@@ -313,49 +315,26 @@ END
 
 /////////////////////////////////////////////////////////////////////////////
 //
-// Dialog Info
-//
-
-IDD_TAB_DLG2 DLGINIT
-BEGIN
-    IDC_MFCLINK1, 0x37c, 194, 0
-0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x555f, 0x6c72, 0x683e, 0x7474, 0x3a70, 
-0x2f2f, 0x6f63, 0x6564, 0x672e, 0x6f6f, 0x6c67, 0x2e65, 0x6f63, 0x2f6d, 
-0x2f70, 0x6261, 0x6d2d, 0x6366, 0x3c2f, 0x4d2f, 0x4346, 0x694c, 0x6b6e, 
-0x555f, 0x6c72, 0x3c3e, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7255, 0x506c, 
-0x6572, 0x6966, 0x3e78, 0x2f3c, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7255, 
-0x506c, 0x6572, 0x6966, 0x3e78, 0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x545f, 
-0x6f6f, 0x746c, 0x7069, 0x613e, 0x5f62, 0x666d, 0x3c63, 0x4d2f, 0x4346, 
-0x694c, 0x6b6e, 0x545f, 0x6f6f, 0x746c, 0x7069, 0x3c3e, 0x464d, 0x4c43, 
-0x6e69, 0x5f6b, 0x7546, 0x6c6c, 0x6554, 0x7478, 0x6f54, 0x6c6f, 0x6974, 
-0x3e70, 0x5254, 0x4555, 0x2f3c, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 0x7546, 
-0x6c6c, 0x6554, 0x7478, 0x6f54, 0x6c6f, 0x6974, 0x3e70, 
-    0
-END
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
 // String Table
 //
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDP_OLE_INIT_FAILED     "OLE 初始化失败。请确保 OLE 库是正确的版本。"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     IDR_MAINFRAME           "ab_mfc\n\nab_mfc\n\n\nabmfc.Document\nab_mfc.Document"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_APP_TITLE       "ab_mfc"
     AFX_IDS_IDLEMESSAGE     "就绪"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_INDICATOR_EXT        "EXT"
     ID_INDICATOR_CAPS       "CAP"
@@ -365,7 +344,7 @@ BEGIN
     ID_INDICATOR_REC        "REC"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_FILE_NEW             "创建新文档\n新建"
     ID_FILE_OPEN            "打开现有文档\n打开"
@@ -378,13 +357,13 @@ BEGIN
     ID_FILE_PRINT_PREVIEW   "显示整页\n打印预览"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_APP_ABOUT            "显示程序信息、版本号和版权\n关于"
     ID_APP_EXIT             "退出应用程序；提示保存文档\n退出"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_FILE_MRU_FILE1       "打开此文档"
     ID_FILE_MRU_FILE2       "打开此文档"
@@ -404,18 +383,18 @@ BEGIN
     ID_FILE_MRU_FILE16      "打开此文档"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_NEXT_PANE            "切换到下一个窗格\n下一窗格"
     ID_PREV_PANE            "切换回上一个窗格\n上一窗格"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_WINDOW_SPLIT         "将活动窗口拆分为多个窗格\n拆分"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_EDIT_CLEAR           "清除选定内容\n清除"
     ID_EDIT_CLEAR_ALL       "清除全部内容\n全部清除"
@@ -430,13 +409,13 @@ BEGIN
     ID_EDIT_REDO            "恢复上次撤消的操作\n重做"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     ID_VIEW_TOOLBAR         "显示或隐藏工具栏\n切换工具栏"
     ID_VIEW_STATUS_BAR      "显示或隐藏状态栏\n切换状态栏"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCSIZE          "更改窗口大小"
     AFX_IDS_SCMOVE          "更改窗口位置"
@@ -447,18 +426,18 @@ BEGIN
     AFX_IDS_SCCLOSE         "关闭活动窗口并提示保存文档"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_SCRESTORE       "将窗口恢复到正常大小"
     AFX_IDS_SCTASKLIST      "激活任务列表"
 END
 
-STRINGTABLE
+STRINGTABLE 
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "关闭打印预览模式\n取消预览"
 END
 
-#endif    // Chinese (Simplified, PRC) resources
+#endif    // 中文(中华人民共和国) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
