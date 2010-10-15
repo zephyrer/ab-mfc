@@ -21,6 +21,7 @@ BEGIN_MESSAGE_MAP(Cab_mfcView, CView)
 	ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
 	ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CView::OnFilePrintPreview)
+	ON_COMMAND(ID_CONSOLE, &Cab_mfcView::OnConsole)
 END_MESSAGE_MAP()
 
 // Cab_mfcView 构造/析构
@@ -28,7 +29,7 @@ END_MESSAGE_MAP()
 Cab_mfcView::Cab_mfcView()
 {
 	// TODO: 在此处添加构造代码
-
+	isConsole = FALSE;
 }
 
 Cab_mfcView::~Cab_mfcView()
@@ -96,4 +97,21 @@ Cab_mfcDoc* Cab_mfcView::GetDocument() const // 非调试版本是内联的
 #endif //_DEBUG
 
 
-// Cab_mfcView 消息处理程序
+#include <io.h>
+#include <cstdio>
+#include <FCNTL.H>
+
+void Cab_mfcView::OnConsole()
+{
+	if(!isConsole)
+	{
+		AllocConsole();
+		freopen( "CONOUT$", "w+t", stdout );// 申请写
+		freopen( "CONIN$", "r+t", stdin );// 申请读
+	}
+	else
+	{
+		FreeConsole();
+	}
+	isConsole = !isConsole;
+}

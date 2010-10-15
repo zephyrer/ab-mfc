@@ -14,7 +14,7 @@ protected: // 仅从序列化创建
 // 属性
 public:
 	Cab_mfcDoc* GetDocument() const;
-
+	bool isConsole;
 // 操作
 public:
 
@@ -40,6 +40,8 @@ protected:
 // 生成的消息映射函数
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnConsole();
 };
 
 #ifndef _DEBUG  // ab_mfcView.cpp 中的调试版本

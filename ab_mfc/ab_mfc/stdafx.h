@@ -56,6 +56,9 @@
 
 #include "SplashWnd.h"
 #include <cstdlib>
+
+#include <Winsock2.h>
+#pragma comment(lib,"Ws2_32.lib")
 #define MYWM_NOTIFYICON WM_USER+1  //Õ–≈ÃÕº±ÍΩ·ππ
 
 #ifdef _UNICODE
