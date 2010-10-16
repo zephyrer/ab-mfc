@@ -185,3 +185,8 @@ void CPage2::OnDropFiles(HDROP hDropInfo)
 	
 	CDialog::OnDropFiles(hDropInfo);
 }
+
+void CPage2::OnOK()
+{
+	return;
+}
