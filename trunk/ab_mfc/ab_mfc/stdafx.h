@@ -55,6 +55,10 @@
 #define SPLASH_WIDTH 200
 
 #include "SplashWnd.h"
+#include "OScopeCtrl.h"
+#include "Dlg2.h"
+BOOL IniteCPUInformationGet(void);
+UINT GetCPUtime(void);
 #include <cstdlib>
 
 #include <Winsock2.h>

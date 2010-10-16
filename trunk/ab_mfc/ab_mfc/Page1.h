@@ -37,6 +37,7 @@ public:
 	afx_msg void OnBnClickedIdcButtonListCtrlDel();
 	afx_msg void OnAdd();
 	afx_msg void OnDel();
+	afx_msg void OnOK();
 	CProgressCtrl m_progress;
 	CSliderCtrl m_slider;
 	CDateTimeCtrl m_datetime;

@@ -33,5 +33,6 @@ public:
 	CTreeCtrl m_FileTree;
 	afx_msg void OnBnClickedButtonFilesearch();
 	afx_msg void OnPaint();
+	afx_msg void OnOK();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 };

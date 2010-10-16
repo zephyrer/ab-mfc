@@ -203,7 +203,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cpu.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Dlg2.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OScopeCtrl.cpp"
 				>
 			</File>
 			<File
@@ -257,7 +269,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cpu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Dlg2.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.h"
+				>
+			</File>
+			<File
+				RelativePath=".\OScopeCtrl.h"
 				>
 			</File>
 			<File

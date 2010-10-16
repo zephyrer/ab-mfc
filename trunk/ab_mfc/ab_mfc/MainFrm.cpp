@@ -18,6 +18,7 @@ IMPLEMENT_DYNCREATE(CMainFrame, CFrameWnd)
 BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
+	ON_COMMAND(ID_32781, &CMainFrame::On32781)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -68,6 +69,19 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
 
+	CRect rect1;
+	GetClientRect(rect1);
+	rect1.top += 25;
+	rect1.bottom -= 20;
+	//ScreenToClient(rect1);
+    m_oscopeCtrl1.Create(WS_VISIBLE | WS_CHILD, rect1, this) ; 
+	m_oscopeCtrl1.SetRange(0.0, 3200.0, 1) ;
+	m_oscopeCtrl1.SetYUnits("InputRev") ;
+	m_oscopeCtrl1.SetXUnits("Samples (Windows Timer: 500 ms)") ;
+//	m_oscopeCtrl1.SetBackgroundColor(RGB(0, 0, 64)) ;
+	m_oscopeCtrl1.SetGridColor(RGB(0, 255, 0)) ;
+	m_oscopeCtrl1.SetPlotColor(RGB(255, 100, 0)) ;
+
 	//托盘图标
 	m_tnid.cbSize = sizeof(NOTIFYICONDATA); 
 	m_tnid.hWnd = this->m_hWnd; 
@@ -86,7 +100,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	::Shell_NotifyIcon(NIM_ADD, &m_tnid); 
 	if(hIcon)
 		::DestroyIcon(hIcon);
-
+	
 	return 0;
 }
 
@@ -174,4 +188,11 @@ void CMainFrame::OnDestroy()
 {
 	CFrameWnd::OnDestroy();
 	::Shell_NotifyIcon(NIM_DELETE,&m_tnid);//关闭窗口时删除图标
+}
+
+void CMainFrame::On32781()
+{
+	// TODO: 在此添加命令处理程序代码
+	CDlg2 dlg;
+	dlg.DoModal();         
 }

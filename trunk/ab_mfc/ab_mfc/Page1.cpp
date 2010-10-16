@@ -450,3 +450,8 @@ void CPage1::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 
 	CDialog::OnVScroll(nSBCode, nPos, pScrollBar);
 }
+
+void CPage1::OnOK()
+{
+	return;
+}
