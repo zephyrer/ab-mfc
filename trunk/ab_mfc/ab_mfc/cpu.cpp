@@ -25,7 +25,7 @@ UINT GetCPUtime(void)
 
 	// 得到系统中的进程数
 	status = NtQuerySystemInformation(SystemTimeInformation, &SysTimeInfo,sizeof(SysTimeInfo),0); 
-	if (status!=NO_ERROR) 
+	if (status != NO_ERROR) 
 		return -1;
 
 	// 得到系统使用时间 

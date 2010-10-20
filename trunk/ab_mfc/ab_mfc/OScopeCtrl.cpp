@@ -78,12 +78,12 @@ BOOL COScopeCtrl::Create(DWORD dwStyle, const RECT& rect,
                          CWnd* pParentWnd, UINT nID) 
 {
 	BOOL result ;
-	static CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW) ;
+	static CString className = AfxRegisterWndClass(CS_HREDRAW | CS_VREDRAW) ;// ×¢²áÀà
 
 	  result = CWnd::CreateEx(WS_EX_CLIENTEDGE | WS_EX_STATICEDGE, 
 							className, NULL, dwStyle, 
-							rect.left, rect.top, rect.right-rect.left, rect.bottom-rect.top,
-							pParentWnd->GetSafeHwnd(), (HMENU)nID) ;
+							rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top,
+							pParentWnd->GetSafeHwnd(), (HMENU)nID) ;		// Éú³É
 	if (result != 0)
 		InvalidateCtrl() ;
 
