@@ -1,0 +1,21 @@
+    [http://www.720.cn/xpic/2008111201125.jpg]
+
+现在要开始我们的MFC之旅了~，可能中间还会讲些别的东东~~~
+= Introduction =
+
+MFC中常见的一些控件，如下图所示（vs2005的工具箱）
+
+[http://i51.tinypic.com/s1njfq.jpg]
+
+[http://oi53.tinypic.com/1z1ws8z.jpg]
+
+[http://i54.tinypic.com/2rp5f2h.jpg]
+
+[http://oi51.tinypic.com/r0shfn.jpg]
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
