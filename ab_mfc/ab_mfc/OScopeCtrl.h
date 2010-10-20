@@ -49,13 +49,13 @@ public:
   
 	double m_dCurrentPosition;   // 当前位置
 	double m_dPreviousPosition;  // 下一位置
-
+	afx_msg void OnSize(UINT nType, int cx, int cy); 
 	virtual ~COScopeCtrl();
 
 protected:
 	//{{AFX_MSG(COScopeCtrl)
 	afx_msg void OnPaint();
-	afx_msg void OnSize(UINT nType, int cx, int cy); 
+	
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

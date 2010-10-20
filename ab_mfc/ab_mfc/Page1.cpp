@@ -15,6 +15,7 @@ CPage1::CPage1(CWnd* pParent /*=NULL*/)
 , m_comb_add(_T(""))
 , m_list_add(_T(""))
 , m_list_ctrl_add(_T(""))
+, m_spinval(_T("spinval"))
 {
 
 }
@@ -37,6 +38,7 @@ void CPage1::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_DATETIMEPICKER1, m_datetime);
 	DDX_Control(pDX, IDC_SPIN1, m_spin);
 	DDX_Control(pDX, IDC_IPADDRESS1, m_ipaddress);
+	DDX_Text(pDX, IDC_SPINVAL, m_spinval);
 }
 
 
@@ -138,6 +140,7 @@ void CPage1::OnBnClickedButtonCombDel()
 	{
 		MessageBox("没东西了！", "oops!", MB_OK);
 	}
+
 	UpdateData(TRUE);
 	int curSel = m_comb.GetCurSel();
 	m_comb.DeleteString(curSel);
@@ -210,10 +213,10 @@ void CPage1::OnNMRclickList2(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CPage1::OnBnClickedIdcButtonListCtrlDel()
 {
-	int nChoice = m_list_ctrl.GetNextItem(-1, LVNI_SELECTED);//获得选择项. 
-	if (nChoice != -1)//当存在选择项时
+	int nChoice = m_list_ctrl.GetNextItem(-1, LVNI_SELECTED);// 获得选择项. 
+	if (nChoice != -1)						// 当存在选择项时
 	{
-		m_list_ctrl.DeleteItem(nChoice);//删除项.
+		m_list_ctrl.DeleteItem(nChoice);	// 删除项.
 	}
 	else
 	{
@@ -243,15 +246,13 @@ void CPage1::OnNMCustomdrawSlider1(NMHDR *pNMHDR, LRESULT *pResult)
 	*pResult = 0;
 }
 
-void CPage1::OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult)//不好用
+void CPage1::OnDeltaposSpin1(NMHDR *pNMHDR, LRESULT *pResult)// 已修改
 {
-	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR);
-	int curPos = m_spin.GetPos();
-	m_slider.SetPos(curPos);
-	m_progress.SetPos(curPos);
-// 	char szNum[32];
-// 	itoa(curPos,szNum,10);
-// 	SetDlgItemText(IDC_NUM,szNum);
+	LPNMUPDOWN pNMUpDown = reinterpret_cast<LPNMUPDOWN>(pNMHDR); 
+	pNMUpDown->iDelta = pNMUpDown->iDelta;			// Spin Contrl的用法（很简单吧~）
+	m_spinval.Format("%d", pNMUpDown->iDelta);		// 转换数据格式，int -> CString
+	SetDlgItemText(IDC_SPINVAL,m_spinval);			// 将数据显示在静态控件上
+
 	*pResult = 0;
 }
 
@@ -268,12 +269,12 @@ void CPage1::OnBnClickedButtonGettime()// 已修改
 
 void CPage1::OnBnClickedButtonGetip()
 {
-	int b1,b2,b3,b4;								// IP的四段,想一想为什么是int型而不是BYTE型呢？
+	int b1, b2, b3, b4;								// IP的四段,想一想为什么是int型而不是BYTE型呢？
 	CString strIP;
 	WSADATA wsd;
-	PHOSTENT  hostinfo;
+	PHOSTENT hostinfo;
 
-	if (WSAStartup(0x202,&wsd) !=  0) 
+	if (WSAStartup(0x202, &wsd) !=  0) 
 	{ 
 		AfxMessageBox( "网络初始化失败 "); 
 	} 

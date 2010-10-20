@@ -46,6 +46,8 @@
 #define IDC_MFCLINK1                    1030
 #define IDC_PIC                         1031
 #define IDC_PIC1                        1032
+#define IDC_SPINVAL                     1033
+#define IDC_SLIDER2                     1034
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_ADD                          32773
@@ -64,7 +66,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        140
 #define _APS_NEXT_COMMAND_VALUE         32782
-#define _APS_NEXT_CONTROL_VALUE         1033
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
