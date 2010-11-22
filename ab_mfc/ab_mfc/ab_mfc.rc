@@ -137,6 +137,8 @@ BEGIN
         MENUITEM "控件模板",                        ID_APP_ABOUT
         MENUITEM "taskmgr",                     ID_32781
         MENUITEM "调试控制台",                       ID_CONSOLE
+        MENUITEM "Translate Dlg",               ID_32782
+        MENUITEM "网络连接",                        ID_32783
     END
 END
 
@@ -246,6 +248,24 @@ FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
 END
 
+IDD_DIALOG2 DIALOGEX 0, 0, 432, 217
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,375,7,50,14
+    PUSHBUTTON      "取消",IDCANCEL,375,24,50,14
+END
+
+IDD_CONECT_DIALOG3 DIALOGEX 0, 0, 415, 198
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Dialog"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,358,7,50,14
+    PUSHBUTTON      "取消",IDCANCEL,358,24,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -323,6 +343,22 @@ BEGIN
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 371
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 191
+    END
+
+    IDD_DIALOG2, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 425
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 210
+    END
+
+    IDD_CONECT_DIALOG3, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 408
         TOPMARGIN, 7
         BOTTOMMARGIN, 191
     END

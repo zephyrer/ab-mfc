@@ -211,6 +211,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Dlg3.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Dlg_Conect.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.cpp"
 				>
 			</File>
@@ -224,6 +232,14 @@
 			</File>
 			<File
 				RelativePath=".\Page2.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\serversocket.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Speci_Widnow.cpp"
 				>
 			</File>
 			<File
@@ -277,6 +293,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Dlg3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Dlg_Conect.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MainFrm.h"
 				>
 			</File>
@@ -294,6 +318,14 @@
 			</File>
 			<File
 				RelativePath=".\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\serversocket.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Speci_Window.h"
 				>
 			</File>
 			<File

@@ -185,6 +185,7 @@ BOOL CAboutDlg::OnInitDialog()
 	//显示初始画面
 	pDialog[0]->ShowWindow(SW_SHOW); 
 	pDialog[1]->ShowWindow(SW_HIDE);
+
 	//保存当前点 选项
 	m_CurSelTab = 0; 
 	return true;
