@@ -5,11 +5,11 @@
 #include "ab_mfc.h"
 
 #include "MainFrm.h"
-
+#include "Dlg3.h"
+#include "Dlg_Conect.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CMainFrame
 
@@ -19,6 +19,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_WM_CREATE()
 	ON_WM_DESTROY()
 	ON_COMMAND(ID_32781, &CMainFrame::On32781)
+	ON_COMMAND(ID_32782, &CMainFrame::On32782)
+	ON_COMMAND(ID_32783, &CMainFrame::On32783)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -179,7 +181,7 @@ LRESULT CMainFrame::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
 			AfxGetApp()->m_pMainWnd->ShowWindow(SW_HIDE);
 			// $$$$$: kiki童鞋在这里return 0;了
 		} 
-		break;
+		break;	
 	} 
 	return CFrameWnd::WindowProc(message, wParam, lParam); 
 } 
@@ -195,4 +197,18 @@ void CMainFrame::On32781()
 	// TODO: 在此添加命令处理程序代码
 	CDlg2 dlg;
 	dlg.DoModal();         
+}
+
+void CMainFrame::On32782()
+{
+	// TODO: 在此添加命令处理程序代码
+	CDlg3 dlg;
+	dlg.DoModal(); 
+}
+
+void CMainFrame::On32783()
+{
+	CDlg_Conect dlg;
+	dlg.DoModal(); 
+	// TODO: 在此添加命令处理程序代码
 }

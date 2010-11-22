@@ -63,6 +63,7 @@ int CDlg2::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_oscopeCtrl1.SetBackgroundColor(RGB(0, 0, 0)) ;
 	m_oscopeCtrl1.SetGridColor(RGB(0, 200, 100)) ;
 	m_oscopeCtrl1.SetPlotColor(RGB(255, 100, 0)) ;
+
 	return 0;
 }
 

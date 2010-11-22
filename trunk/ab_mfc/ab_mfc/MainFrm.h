@@ -42,6 +42,10 @@ public:
 	afx_msg void OnDestroy();
 public:
 	afx_msg void On32781();
+public:
+	afx_msg void On32782();
+public:
+	afx_msg void On32783();
 };
 
 

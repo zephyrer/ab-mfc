@@ -274,7 +274,7 @@ void CPage1::OnBnClickedButtonGetip()
 	WSADATA wsd;
 	PHOSTENT hostinfo;
 
-	if (WSAStartup(0x202, &wsd) !=  0) 
+	if (WSAStartup(MAKEWORD(2,2), &wsd) !=  0) 
 	{ 
 		AfxMessageBox( "ÍøÂç³õÊ¼»¯Ê§°Ü "); 
 	} 
