@@ -46,6 +46,12 @@ public:
 	afx_msg void On32782();
 public:
 	afx_msg void On32783();
+public:
+	afx_msg void OnIcon32777();
+public:
+	afx_msg void OnIcon32776();
+public:
+	afx_msg void OnIcon32775();
 };
 
 
