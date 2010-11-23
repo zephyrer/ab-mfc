@@ -21,6 +21,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWnd)
 	ON_COMMAND(ID_32781, &CMainFrame::On32781)
 	ON_COMMAND(ID_32782, &CMainFrame::On32782)
 	ON_COMMAND(ID_32783, &CMainFrame::On32783)
+	ON_COMMAND(ID_ICON_32777, &CMainFrame::OnIcon32777)
+	ON_COMMAND(ID_ICON_32776, &CMainFrame::OnIcon32776)
+	ON_COMMAND(ID_ICON_32775, &CMainFrame::OnIcon32775)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -210,5 +213,23 @@ void CMainFrame::On32783()
 {
 	CDlg_Conect dlg;
 	dlg.DoModal(); 
+	// TODO: 在此添加命令处理程序代码
+}
+
+void CMainFrame::OnIcon32777()
+{
+	CMainFrame::OnClose();
+	// TODO: 在此添加命令处理程序代码
+}
+
+void CMainFrame::OnIcon32776()
+{
+	ShowWindow(SW_HIDE);
+	// TODO: 在此添加命令处理程序代码
+}
+
+void CMainFrame::OnIcon32775()
+{
+	ShowWindow(SW_SHOW);
 	// TODO: 在此添加命令处理程序代码
 }

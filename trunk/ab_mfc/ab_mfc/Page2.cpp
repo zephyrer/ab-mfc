@@ -13,7 +13,7 @@ IMPLEMENT_DYNAMIC(CPage2, CDialog)
 CPage2::CPage2(CWnd* pParent /*=NULL*/)
 	: CDialog(CPage2::IDD, pParent)
 {
-
+	strcpy(FileBuffer, "成绩表");
 }
 
 CPage2::~CPage2()
@@ -32,6 +32,7 @@ BEGIN_MESSAGE_MAP(CPage2, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON_FILESEARCH, &CPage2::OnBnClickedButtonFilesearch)
 	ON_WM_PAINT()
 	ON_WM_DROPFILES()
+	ON_BN_CLICKED(IDC_BUTTON1, &CPage2::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 
@@ -39,7 +40,31 @@ END_MESSAGE_MAP()
 
 void CPage2::OnBnClickedButtonFilesearch()
 {
-	BrowseFile(0, "成绩表");//遍历"成绩表"文件夹内的所有目录
+	CString m_FileDir;
+	BROWSEINFO bi;
+	ZeroMemory(&bi, sizeof(BROWSEINFO));
+	bi.hwndOwner = m_hWnd;
+	bi.ulFlags   = BIF_RETURNONLYFSDIRS;
+	LPITEMIDLIST pidl = SHBrowseForFolder(&bi);
+	BOOL bRet = FALSE;
+	TCHAR szFolder[MAX_PATH * 2];
+	strcpy(szFolder, "成绩表");
+
+
+	if (pidl)
+	{
+		if (SHGetPathFromIDList(pidl, szFolder))  
+			bRet = TRUE;
+		IMalloc *pMalloc = NULL;
+		if (SUCCEEDED(SHGetMalloc(&pMalloc)) && pMalloc)
+		{
+			pMalloc->Free(pidl);
+			pMalloc->Release();
+		}
+	}
+
+	m_FileDir = szFolder;
+	BrowseFile(0, m_FileDir);//遍历"成绩表"文件夹内的所有目录
 }
 
 BOOL CPage2::OnInitDialog()
@@ -66,6 +91,29 @@ BOOL CPage2::OnInitDialog()
 
 	return TRUE;
 }
+
+
+CString CPage2::GetFileName()
+{		
+	OpenFileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_EXPLORER;
+	OpenFileName.lStructSize=sizeof(OpenFileName);
+	OpenFileName.hwndOwner = this->GetSafeHwnd();
+	OpenFileName.hInstance = ::GetModuleHandle(NULL);
+	OpenFileName.lpstrFilter = "所有文件\0*.*";//扩展名
+	OpenFileName.lpstrCustomFilter = NULL;//扩展名
+	OpenFileName.nMaxFile = MAX_PATH;//文件名缓冲长度
+	OpenFileName.lpstrInitialDir = FileBuffer;
+	OpenFileName.lpstrFile = FileBuffer;
+	OpenFileName.lpstrFileTitle = NULL;//扩展名
+	OpenFileName.lpTemplateName = "NULL";//扩展名
+	OpenFileName.lpstrTitle = "Open files...";
+	OpenFileName.lpstrDefExt="*";
+
+	GetOpenFileName(&OpenFileName);
+
+return OpenFileName.lpstrFile;	
+}
+
 
 void CPage2::BrowseFile(int CallNum, CString strFile)
 {
@@ -189,4 +237,25 @@ void CPage2::OnDropFiles(HDROP hDropInfo)
 void CPage2::OnOK()
 {
 	return;
+}
+
+void CPage2::OnBnClickedButton1()
+{
+	CString strpath, strfilename;
+
+	// TODO: 在此添加控件通知处理程序代码
+	strpath = "路径:";
+	strfilename = "文件名";
+	//strpath += GetFileName();			// 另外一种直接打开找文件窗口的方式
+	CFileDialog dlg(TRUE, NULL, NULL, NULL, "全部文件|*.*|jpg|*.jpg|bmp|*.bmp");
+	{
+		if(dlg.DoModal() == IDOK)
+		{  
+			strpath += dlg.GetPathName();
+			strfilename += dlg.GetFileName();
+		}
+	}
+	strpath += "\r\n";					// 注意这里用到的换行符
+	strpath += strfilename;
+	SetDlgItemText(IDC_PATH1, strpath);
 }

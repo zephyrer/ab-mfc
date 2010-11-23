@@ -13,7 +13,9 @@ public:
 	virtual ~CPage2();
 //目录树
 	void BrowseFile(int CallNum,CString strFile);
+	CString GetFileName();
 	HICON m_hIcon;
+	char FileBuffer[MAX_PATH];
 	CImageList m_iImageList;//图标链
 	HTREEITEM strRoot;
 	HTREEITEM strHTFir;
@@ -22,6 +24,7 @@ public:
 	HTREEITEM strHtFor;
 	HTREEITEM strHtFif;
 	HTREEITEM strHtEnd;
+	OPENFILENAME OpenFileName;
 // 对话框数据
 	enum { IDD = IDD_TAB_DLG2 };
 	
@@ -35,4 +38,6 @@ public:
 	afx_msg void OnPaint();
 	afx_msg void OnOK();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+public:
+	afx_msg void OnBnClickedButton1();
 };

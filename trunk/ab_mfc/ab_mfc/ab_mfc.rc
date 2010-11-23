@@ -155,9 +155,9 @@ IDR_MENU_ICON MENU
 BEGIN
     POPUP "icon"
     BEGIN
-        MENUITEM "最大化(&m)",                     ID_ICON_32775
-        MENUITEM "最小化(&i)",                     ID_ICON_32776
-        MENUITEM "退出(&e)",                      ID_ICON_32777
+        MENUITEM "显示(&S)",                      ID_ICON_32775
+        MENUITEM "隐藏(&H)",                      ID_ICON_32776
+        MENUITEM "退出(&E)",                      ID_ICON_32777
     END
 END
 
@@ -237,8 +237,10 @@ EXSTYLE WS_EX_ACCEPTFILES
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     CONTROL         "",IDC_TREE_FILE,"SysTreeView32",WS_BORDER | WS_HSCROLL | WS_TABSTOP,14,15,262,209
-    PUSHBUTTON      "遍历文件夹",IDC_BUTTON_FILESEARCH,323,39,50,14
+    PUSHBUTTON      "遍历文件夹",IDC_BUTTON_FILESEARCH,305,39,50,14
     LTEXT           "遍历文件夹生成目录树：",IDC_STATIC,289,21,94,8
+    PUSHBUTTON      "打开文件",IDC_BUTTON1,306,63,50,14
+    EDITTEXT        IDC_PATH1,287,84,101,39,ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY
 END
 
 IDD_DIALOG1 DIALOGEX 0, 0, 378, 198
