@@ -137,6 +137,8 @@ public:
 	afx_msg void OnTcnSelchangeTab1(NMHDR *pNMHDR, LRESULT *pResult);
 	//afx_msg void OnBnClickedOk();
 	virtual void OnOK();
+public:
+	afx_msg void OnIcon32777();
 };
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
@@ -152,6 +154,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB1, &CAboutDlg::OnTcnSelchangeTab1)
 	//ON_BN_CLICKED(IDOK, &CAboutDlg::OnBnClickedOk)
+	ON_COMMAND(ID_ICON_32777, &CAboutDlg::OnIcon32777)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
@@ -214,4 +217,10 @@ void CAboutDlg::OnOK()
 	// TODO: Add your specialized code here and/or call the base class
 	//return ;
 	CDialog::OnOK();
+}
+
+void CAboutDlg::OnIcon32777()
+{
+	CAboutDlg::OnClose();
+	// TODO: 在此添加命令处理程序代码
 }

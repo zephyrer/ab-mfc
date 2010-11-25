@@ -6,4 +6,5 @@ HRESULT EnableBlurBehindWindow(HWND window,
                                bool enable = true,
                                HRGN region = 0,
                                bool transitionOnMaximized = false);
+
 #endif

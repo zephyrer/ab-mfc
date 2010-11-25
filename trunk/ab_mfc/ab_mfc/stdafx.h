@@ -57,6 +57,7 @@
 #include "SplashWnd.h"
 #include "OScopeCtrl.h"
 #include "Dlg2.h"
+
 BOOL IniteCPUInformationGet(void);
 UINT GetCPUtime(void);
 #include <cstdlib>

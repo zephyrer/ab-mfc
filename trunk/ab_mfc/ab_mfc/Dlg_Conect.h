@@ -6,7 +6,7 @@
 class CDlg_Conect : public CDialog
 {
 	DECLARE_DYNAMIC(CDlg_Conect)
-friend UINT ServerThreadProc(LPVOID pParam);
+	friend UINT ServerThreadProc(LPVOID pParam);
 public:
 	CDlg_Conect(CWnd* pParent = NULL);   // 标准构造函数
 	virtual ~CDlg_Conect();

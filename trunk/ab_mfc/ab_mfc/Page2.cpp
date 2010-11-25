@@ -247,7 +247,7 @@ void CPage2::OnBnClickedButton1()
 	strpath = "路径:";
 	strfilename = "文件名";
 	//strpath += GetFileName();			// 另外一种直接打开找文件窗口的方式
-	CFileDialog dlg(TRUE, NULL, NULL, NULL, "全部文件|*.*|jpg|*.jpg|bmp|*.bmp");
+	CFileDialog dlg(TRUE, NULL, NULL, NULL, "全部文件|*.*|jpg|*.jpg|bmp|*.bmp", NULL);
 	{
 		if(dlg.DoModal() == IDOK)
 		{  

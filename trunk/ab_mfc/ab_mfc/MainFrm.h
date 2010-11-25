@@ -34,6 +34,7 @@ protected:  // 控件条嵌入成员
 	CStatusBar  m_wndStatusBar;
 	CToolBar    m_wndToolBar;
 	COScopeCtrl	m_oscopeCtrl1;
+
 // 生成的消息映射函数
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);

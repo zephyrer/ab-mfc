@@ -79,13 +79,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	rect1.top += 25;
 	rect1.bottom -= 20;
 	//ScreenToClient(rect1);
-    m_oscopeCtrl1.Create(WS_VISIBLE | WS_CHILD, rect1, this) ; 
-	m_oscopeCtrl1.SetRange(0.0, 3200.0, 1) ;
-	m_oscopeCtrl1.SetYUnits("InputRev") ;
-	m_oscopeCtrl1.SetXUnits("Samples (Windows Timer: 500 ms)") ;
-//	m_oscopeCtrl1.SetBackgroundColor(RGB(0, 0, 64)) ;
-	m_oscopeCtrl1.SetGridColor(RGB(0, 255, 0)) ;
-	m_oscopeCtrl1.SetPlotColor(RGB(255, 100, 0)) ;
+    //m_oscopeCtrl1.Create(WS_VISIBLE | WS_CHILD, rect1, this) ; 
+	//m_oscopeCtrl1.SetRange(0.0, 3200.0, 1) ;
+	//m_oscopeCtrl1.SetYUnits("InputRev") ;
+	//m_oscopeCtrl1.SetXUnits("Samples (Windows Timer: 500 ms)") ;
+	//m_oscopeCtrl1.SetBackgroundColor(RGB(0, 0, 64)) ;
+	//m_oscopeCtrl1.SetGridColor(RGB(0, 255, 0)) ;
+	//m_oscopeCtrl1.SetPlotColor(RGB(255, 100, 0)) ;
 
 	//托盘图标
 	m_tnid.cbSize = sizeof(NOTIFYICONDATA); 
@@ -218,7 +218,9 @@ void CMainFrame::On32783()
 
 void CMainFrame::OnIcon32777()
 {
-	CMainFrame::OnClose();
+	//CMainFrame::OnClose();
+	::Shell_NotifyIcon(NIM_DELETE,&m_tnid);//关闭窗口时删除图标
+	exit(0);
 	// TODO: 在此添加命令处理程序代码
 }
 
