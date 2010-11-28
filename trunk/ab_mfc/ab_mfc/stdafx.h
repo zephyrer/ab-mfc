@@ -54,6 +54,9 @@
 #define SPLASH_HEIGHT 271
 #define SPLASH_WIDTH 200
 
+#include <atlimage.h>
+#include <atlsimpcoll.h>
+
 #include "SplashWnd.h"
 #include "OScopeCtrl.h"
 #include "Dlg2.h"
