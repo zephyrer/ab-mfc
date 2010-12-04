@@ -28,8 +28,10 @@ void Page4::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(Page4, CDialog)
+	ON_WM_TIMER()
 	ON_BN_CLICKED(IDC_REFRESH, &Page4::OnBnClickedRefresh)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, &Page4::OnLvnItemchangedList1)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -62,16 +64,17 @@ BOOL Page4::OnInitDialog()
 	ListView_InsertColumn(m_list, 1, &lvcol); 
 	ListView_SetColumnWidth(m_list, 1, 100); 
 	ListView_SetExtendedListViewStyle(m_list,LVS_EX_FULLROWSELECT|LVS_EX_GRIDLINES);//设置显示样式
+	SetTimer(1,500,NULL);
+	EnumProcessInfo();
+	InitListCtrl();
 
 	return true;
 }
 void Page4::OnBnClickedRefresh()
 {
 	UpdateData(TRUE);
-
-    int nRow = m_list.GetItemCount();//从后往前插入
-	nRow = m_list.InsertItem(nRow, "12");//插入行
-	m_list.SetItemText(nRow,1, "123");//设置数据
+	m_list.DeleteAllItems();
+	InitListCtrl();
 	UpdateData(FALSE);
 }
 
@@ -80,4 +83,60 @@ void Page4::OnLvnItemchangedList1(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMLISTVIEW pNMLV = reinterpret_cast<LPNMLISTVIEW>(pNMHDR);
 	// TODO: 在此添加控件通知处理程序代码
 	*pResult = 0;
+}
+
+void Page4::InitListCtrl(void)
+{
+	for( UINT i=0 ; i < ProcList.size() ; i++ )
+	{
+		m_list.InsertItem( i, ProcList[i].szExeFile );
+		CString string;
+		string.Format("%d", ProcList[i].th32ProcessID);
+		m_list.SetItemText( i, 1,  string);
+
+	}
+}
+
+BOOL Page4::EnumProcessInfo(void)
+{
+	//创建系统当前进程快照
+	HANDLE hProcessShot = CreateToolhelp32Snapshot( TH32CS_SNAPPROCESS , 0 ); 
+	if( INVALID_HANDLE_VALUE == hProcessShot )
+		return FALSE ;
+	// 定义进程信息结构
+	PROCESSENTRY32 pe32 = {sizeof(pe32)} ;
+
+	// 循环枚举进程信息
+	if (Process32First( hProcessShot, &pe32 ) )
+	{
+		do {
+			if( 0 == pe32.th32ProcessID )
+				strcpy(pe32.szExeFile, "System Idle Process") ;
+			else if( 4 == pe32.th32ProcessID )
+				strcpy(pe32.szExeFile, "System") ;
+
+			// 添加到vector中
+			ProcList.push_back(pe32);
+		}while (Process32Next(hProcessShot,&pe32));
+	}
+	CloseHandle (hProcessShot) ;
+	
+	return TRUE ;
+}
+
+void Page4::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if( nIDEvent == 1 )
+	{
+		EnumProcessInfo();
+	}
+	CDialog::OnTimer(nIDEvent);
+}
+
+void Page4::OnDestroy()
+{
+	CDialog::OnDestroy();
+	KillTimer(1);
+	// TODO: 在此处添加消息处理程序代码
 }

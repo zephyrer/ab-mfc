@@ -40,8 +40,8 @@ END_MESSAGE_MAP()
 BOOL CDlg2::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	m_tab.InsertItem(0, _T("tab1")); 
-	m_tab.InsertItem(1, _T("tab2")); 
+	m_tab.InsertItem(0, _T("性能")); 
+	m_tab.InsertItem(1, _T("进程")); 
 	m_page1.Create(IDD_TAB_DLG3, &m_tab); 
 	m_page2.Create(IDD_TAB_DLG4, &m_tab); 
 	//设置画面窗口大小在控件内
