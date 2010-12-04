@@ -115,7 +115,7 @@ BOOL CPage1::OnInitDialog()
 
 	//spin
 	m_spin.SetBuddy(GetDlgItem(IDC_NUM));
-	m_spin.SetRange(0,5);
+	m_spin.SetRange(0, 5);
 	m_spin.SetPos(0);
 	return TRUE;
 }

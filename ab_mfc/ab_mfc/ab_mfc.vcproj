@@ -235,6 +235,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Page3.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Page4.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\serversocket.cpp"
 				>
 			</File>
@@ -314,6 +322,14 @@
 			</File>
 			<File
 				RelativePath=".\Page2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Page3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Page4.h"
 				>
 			</File>
 			<File

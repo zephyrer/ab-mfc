@@ -105,7 +105,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	::Shell_NotifyIcon(NIM_ADD, &m_tnid); 
 	if(hIcon)
 		::DestroyIcon(hIcon);
-	
+
+	m_tnid.uFlags = NIF_INFO;						// 这个标志使得可以显示气球提示
+	lstrcpy(m_tnid.szInfo, TEXT("Hello Kiki!"));
+	m_tnid.dwInfoFlags = NIIF_INFO;
+	lstrcpy(m_tnid.szInfoTitle, TEXT("ab_mfc"));
+
+	Shell_NotifyIcon(NIM_MODIFY, &m_tnid);			// 显示气球提示
+
 	return 0;
 }
 

@@ -56,7 +56,7 @@ void CPage2::OnBnClickedButtonFilesearch()
 		if (SHGetPathFromIDList(pidl, szFolder))  
 			bRet = TRUE;
 		IMalloc *pMalloc = NULL;
-		if (SUCCEEDED(SHGetMalloc(&pMalloc)) && pMalloc)
+		if (SUCCEEDED(SHGetMalloc(&pMalloc)) &&pMalloc)
 		{
 			pMalloc->Free(pidl);
 			pMalloc->Release();
@@ -96,7 +96,7 @@ BOOL CPage2::OnInitDialog()
 CString CPage2::GetFileName()
 {		
 	OpenFileName.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST | OFN_EXPLORER;
-	OpenFileName.lStructSize=sizeof(OpenFileName);
+	OpenFileName.lStructSize = sizeof(OpenFileName);
 	OpenFileName.hwndOwner = this->GetSafeHwnd();
 	OpenFileName.hInstance = ::GetModuleHandle(NULL);
 	OpenFileName.lpstrFilter = "所有文件\0*.*";//扩展名
