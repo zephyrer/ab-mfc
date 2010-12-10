@@ -10,6 +10,22 @@ class Cab_mfcView : public CView
 protected: // 仅从序列化创建
 	Cab_mfcView();
 	DECLARE_DYNCREATE(Cab_mfcView)
+//OpenGL定义
+	GLdouble frenqu;
+	GLdouble m_zTra;
+	GLdouble m_yTra;
+	GLdouble m_xTra;
+	GLdouble m_zRo;
+	GLdouble m_xRo;
+	GLdouble m_yRo;
+//	CDC* m_pDC;//设备描述表
+	void JIQIREN();
+	void RenderScene();
+	BOOL SetWindowPixelFormat(HDC m_hDC);
+	HGLRC m_hRC;//绘制描述表
+	HDC m_hDC;//设备描述表
+	int m_GLPixelIndex;
+	float m_size;
 
 // 属性
 public:
@@ -42,6 +58,12 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnConsole();
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
+	afx_msg void OnDestroy();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 
 #ifndef _DEBUG  // ab_mfcView.cpp 中的调试版本
