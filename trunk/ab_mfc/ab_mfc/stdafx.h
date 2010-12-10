@@ -69,6 +69,13 @@ UINT GetCPUtime(void);
 #pragma comment(lib,"Ws2_32.lib")
 #include "serversocket.h"
 #define MYWM_NOTIFYICON WM_USER+1  //托盘图标结构
+//opengl 头文件
+#include <gl/gl.h>
+#include <gl/glu.h>
+#include <gl/glut.h>
+#include <gl/glaux.h>
+
+
 
 #define _UNICODE
 
