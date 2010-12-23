@@ -1,6 +1,5 @@
-#summary One-sentence summary of this page.
 #labels GFW,VPN,SSH,TOR
-
+#如何翻墙
 = Introduction =
 
 各种翻墙。
@@ -182,3 +181,6 @@ foxyproxy默认让google 的邮件链接使用TOR来访问，这里我们应该�
 
 不过不管是哪种方法，你都得先找到代理服务器，而且得是境外的。
 Across the Great Wall, We can reach every corner in the world!
+
+
+更多可以访问下面这个网站：[http://www.free-vpn.net/]
